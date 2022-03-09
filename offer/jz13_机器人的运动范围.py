@@ -51,8 +51,6 @@ class Solution:
         count += 1
         
         return (count+
-                self.movingCountCore(threshold, rows, cols, row-1, col, visited)+ 
-                self.movingCountCore(threshold, rows, cols, row, col-1, visited)+ 
                 self.movingCountCore(threshold, rows, cols, row+1, col, visited)+
                 self.movingCountCore(threshold, rows, cols, row, col+1, visited))
     
