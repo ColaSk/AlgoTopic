@@ -40,8 +40,9 @@ class Philosopher(object):
 
 """哲学家就餐问题的解决方案
 1.两把锁合并成一把锁(将五把锁合并成一把锁), 但是会造成资源浪费，就餐过程中仅需要两根筷子，但是会把
-  五根筷子资源全部锁住，赞成资源浪费
-2.混入一个左撇子的方式(其他所有人都是先抢右边在抢左边)
+  五根筷子资源全部锁住，造成资源浪费
+2.混入一个左撇子的方式(其他所有人都是先抢右边在抢左边，同时只有一个人在吃，所以效率和1相同)
+3.混入多个左撇子的方式(将编号为奇数的作为左撇子)
 
 """
 
@@ -90,6 +91,31 @@ class LeftPhilosopher(Philosopher):
                         time.sleep(2)
             print(f'哲学家ID: {self.id} 进餐完毕')
 
+
+# 有效率的左撇子哲学家
+class EfficientLeftPhilosopher(Philosopher):
+
+    """
+    3.
+    """
+
+    def eat(self):
+        while True:
+            
+            if self.id%2:
+                with self.lc.lock: 
+                    print(f'哲学家ID: {self.id} 已经获取筷子ID: {self.lc.id}')
+                    with self.rc.lock:
+                        print(f'哲学家ID: {self.id} 已经获取筷子ID: {self.rc.id}')
+                        time.sleep(2)
+            else:
+                with self.rc.lock:
+                    print(f'哲学家ID: {self.id} 已经获取筷子ID: {self.rc.id}')
+                    with self.lc.lock:
+                        print(f'哲学家ID: {self.id} 已经获取筷子ID: {self.lc.id}')
+                        time.sleep(2)
+            print(f'哲学家ID: {self.id} 进餐完毕')
+
 def main(philosopher_class: Philosopher):
     
     allchopsticks = [Chopsticks(i) for i in range(5)]
@@ -103,4 +129,4 @@ def main(philosopher_class: Philosopher):
         pass
 
 if __name__ == '__main__':
-    main(LeftPhilosopher)
+    main(EfficientLeftPhilosopher)
