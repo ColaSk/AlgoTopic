@@ -73,7 +73,8 @@ class ConditionThreadPrint(object):
         self.condition.acquire()
         for d in self.data:
             self.condition.wait()
-            print(d)
+            print(d, end='', flush=True)
+            
         self.condition.release()
 
 
