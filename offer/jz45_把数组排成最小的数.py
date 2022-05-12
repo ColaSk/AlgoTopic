@@ -17,6 +17,13 @@
 这个次序的数字拼接在一起就好了。
 - 只考虑首字符的大小不可靠，但是如果字符串a拼接b的得到的数字大于b拼接a，那么肯定b应该排在a的前面，
 我们要就按照这样的次序将排序的比较重载就可以了。
+
+
+cmp_to_key()
+是将比较函数（comparison function）转化为关键字函数（key function）。与使用接受·关键字函数·的方法
+一同使用（如 sorted(), min(), max(), heapq.nlargest(), itertools.groupby() 等)。该函数主要用来
+将程序转成 Python 3 格式的，因为 Python 3 中不支持比较函数cmp()。
+
 """
 class Solution:
     def PrintMinNumber(self , numbers: List[int]) -> str:
